@@ -5,7 +5,6 @@ WITH sel AS (
         s.source AS utm_source,
         s.medium AS utm_medium,
         s.campaign AS utm_campaign,
-        s.content AS utm_content,
         l.lead_id,
         l.created_at,
         l.amount,
@@ -27,7 +26,6 @@ SELECT
     sel.utm_source,
     sel.utm_medium,
     sel.utm_campaign,
-    sel.utm_content,
     sel.lead_id,
     sel.created_at,
     sel.amount,
@@ -42,4 +40,3 @@ ORDER BY
     sel.utm_medium ASC,
     sel.utm_campaign ASC
 LIMIT 10;
-

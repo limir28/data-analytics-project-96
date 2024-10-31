@@ -27,19 +27,16 @@ tab AS (
         sel.utm_campaign,
         COUNT(sel.visitor_id) AS visitors_count,
         DATE(sel.visit_date) AS visit_date,
-        COUNT(sel.lead_id) AS leads_count,
+        COUNT(sel.visitor_id) FILTER
+        (WHERE sel.created_at IS NOT null) AS leads_count,
         COUNT(sel.lead_id) FILTER (
-            WHERE sel.status_id = '142'
+            WHERE sel.status_id = 142
         ) AS purchases_count,
-        SUM(sel.amount) FILTER (WHERE sel.status_id = '142') AS revenue
+        SUM(sel.amount) FILTER (WHERE sel.status_id = 142) AS revenue
     FROM sel
     WHERE sel.rnk = 1
     GROUP BY
-        DATE(sel.visit_date),
-        sel.utm_source,
-        sel.utm_medium,
-        sel.utm_campaign,
-        sel.created_at
+        DATE(sel.visit_date), sel.utm_source, sel.utm_medium, sel.utm_campaign
 ),
 
 ads_aggregated AS (
@@ -94,5 +91,5 @@ ORDER BY
     tab.utm_source ASC,
     tab.utm_medium ASC,
     tab.utm_campaign ASC
-LIMIT 15;
+LIMIT 15
 
